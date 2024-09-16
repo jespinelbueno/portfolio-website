@@ -23,7 +23,7 @@ export function Projects() {
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-600  flex items-center justify-center" id="projects">
       <div className="container px-4 md:px-6 max-w-6xl">
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-8 text-center">Projects</h2>
+        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-8 text-center text-white">Projects</h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <Card key={index}>

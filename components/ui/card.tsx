@@ -6,7 +6,7 @@ export const Card: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   ...props 
 }) => {
   return (
-    <div className={`bg-white shadow-md rounded-lg ${className}`} {...props}>
+    <div className={`bg-black shadow-md rounded-lg ${className}`} {...props}>
       {children}
     </div>
   )
@@ -18,7 +18,7 @@ export const CardHeader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   ...props 
 }) => {
   return (
-    <div className={`px-6 py-4 border-b ${className}`} {...props}>
+    <div className={`px-6 py-4 border-b text-white ${className}`} {...props}>
       {children}
     </div>
   )
@@ -30,7 +30,7 @@ export const CardTitle: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = ({
   ...props 
 }) => {
   return (
-    <h3 className={`text-lg font-semibold ${className}`} {...props}>
+    <h3 className={`text-lg text-white font-semibold ${className}`} {...props}>
       {children}
     </h3>
   )
@@ -42,7 +42,7 @@ export const CardDescription: React.FC<React.HTMLAttributes<HTMLParagraphElement
   ...props 
 }) => {
   return (
-    <p className={`text-sm text-gray-600 ${className}`} {...props}>
+    <p className={`text-sm text-white ${className}`} {...props}>
       {children}
     </p>
   )
@@ -54,7 +54,7 @@ export const CardContent: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   ...props 
 }) => {
   return (
-    <div className={`px-6 py-4 ${className}`} {...props}>
+    <div className={`px-6 py-4 text-white ${className}`} {...props}>
       {children}
     </div>
   )
