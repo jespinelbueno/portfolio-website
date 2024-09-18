@@ -4,24 +4,24 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 export function Projects() {
   const projects = [
     {
-      title: "Project 1",
-      description: "A brief description of Project 1",
-      technologies: "React, Node.js, MongoDB"
+      title: "Chat Application",
+      description: "Developed a chat application with user authentication, graphic chat interface, real-time message delivery, and password encryption.",
+      technologies: "React, PostgreSQL, JavaScript, Node.js, JWT Encryption, Express, pg..."
     },
     {
-      title: "Project 2",
-      description: "A brief description of Project 2",
-      technologies: "Vue.js, Express, PostgreSQL"
+      title: "AI Website Background Generator",
+      description: "Developed a web application for dynamically generating and displaying AI-created background images.",
+      technologies: "React, seedrandom, AIPicGen API, CSS, and JavaScript."
     },
     {
-      title: "Project 3",
-      description: "A brief description of Project 3",
-      technologies: "Next.js, GraphQL, Prisma"
+      title: "Automatic Email Prep",
+      description: "Designed a tool for email composition using Python GUI automation, offering a user-friendly interface and an SMTP alternative for email setup.",
+      technologies: "Python, PyAutoGUI, Outlook."
     }
   ]
 
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-600  flex items-center justify-center" id="projects">
+    <section className="w-full py-12 md:py-24 lg:py-32 bg-black flex items-center justify-center" id="projects">
       <div className="container px-4 md:px-6 max-w-6xl">
         <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-8 text-center text-white">Projects</h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
