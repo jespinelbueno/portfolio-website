@@ -6,17 +6,20 @@ export function Projects() {
     {
       title: "Chat Application",
       description: "Developed a chat application with user authentication, graphic chat interface, real-time message delivery, and password encryption.",
-      technologies: "React, PostgreSQL, JavaScript, Node.js, JWT Encryption, Express, pg..."
+      technologies: "React, PostgreSQL, JavaScript, Node.js, JWT Encryption, Express, pg...",
+      url: "https://github.com/yourusername/chat-application" // Example URL
     },
     {
       title: "AI Website Background Generator",
       description: "Developed a web application for dynamically generating and displaying AI-created background images.",
-      technologies: "React, seedrandom, AIPicGen API, CSS, and JavaScript."
+      technologies: "React, seedrandom, AIPicGen API, CSS, and JavaScript.",
+      url: "https://github.com/yourusername/ai-background-generator" // Example URL
     },
     {
       title: "Automatic Email Prep",
       description: "Designed a tool for email composition using Python GUI automation, offering a user-friendly interface and an SMTP alternative for email setup.",
-      technologies: "Python, PyAutoGUI, Outlook."
+      technologies: "Python, PyAutoGUI, Outlook.",
+      url: "https://github.com/yourusername/automatic-email-prep" // Example URL
     }
   ]
 
@@ -33,9 +36,11 @@ export function Projects() {
               </CardHeader>
               <CardContent>
                 <p>Technologies used: {project.technologies}</p>
-                <Button className="mt-4" variant="outline">
-                  View Project
-                </Button>
+                <a href={project.url} target="_blank" rel="noopener noreferrer">
+                  <Button className="mt-4" variant="outline">
+                    View Project
+                  </Button>
+                </a>
               </CardContent>
             </Card>
           ))}
