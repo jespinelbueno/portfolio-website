@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className=" bg-black flex flex-col min-h-screen">
       <Header />
-      <main className="flex-1 flex flex-col items-center justify-center">
+      <main className="flex-1 flex flex-col items-center justify-center self-align">
         <About />
         <Projects />
         <Contact />
