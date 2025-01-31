@@ -33,7 +33,7 @@ const timelineItems: TimelineItem[] = [
       startYear: 2023,
       endYear: "Present",
       description: "Responsible for diversity recruitment strategies and student engagement.",
-      details: "Streamlined data collection processes managing 1,540 leads from the academic year 2023 to 2024, improving tracking efficiency and increasing matriculation rates by 330%. Delivered engaging presentations at 30+ recruitment events, increasing inquiries by 200% within 13 months. Assisted in allocating $250,000 annually in scholarship grants. Used Liberty University's CRM integration to monitor the progress of more than 1,500 recruited students.",
+      details: "Streamlined data collection processes managing more than 1500 leads from the academic year 2023 to 2024, improving tracking efficiency and increasing matriculation rates by 330%. Delivered engaging presentations at 30+ recruitment events, increasing inquiries by 200% within 13 months. Assisted in allocating $250,000 annually in scholarship grants. Used Liberty University's CRM integration to monitor the progress of more than 1,500 recruited students.",
       type: "experience"
     },
     {
