@@ -3,6 +3,7 @@ import { About } from '@/components/About'
 import { Projects } from '@/components/Projects'
 import { Contact } from '@/components/Contact'
 import { Footer } from '@/components/Footer'
+import { EducationExperience } from '@/components/Education&Experience'
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <Header />
       <main className="flex-1 flex flex-col items-center justify-center self-align">
         <About />
+        <EducationExperience></EducationExperience>
         <Projects />
         <Contact />
       </main>

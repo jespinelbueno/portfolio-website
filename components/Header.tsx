@@ -14,6 +14,9 @@ export function Header() {
         <Link className="text-sm font-medium hover:underline underline-offset-4" href="#about">
           About
         </Link>
+        <Link className='text-sm font-medium hover:underline underline-offset-4' href="#education-experience">
+        Education & Experience
+        </Link>
         <Link className="text-sm font-medium hover:underline underline-offset-4" href="#projects">
           Projects
         </Link>
