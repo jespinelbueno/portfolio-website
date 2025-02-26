@@ -1,11 +1,17 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Button } from "@/components/ui/button"
-import { Code, Database, Globe, Shield, BarChartIcon as ChartBar, Headphones, Network, Lock, LineChart, X } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { Code, Database, Globe, Shield, BarChartIcon as ChartBar, Headphones, Network, Lock, LineChart } from 'lucide-react'
 import React from 'react'
+import { 
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription
+} from "@/components/ui/dialog"
 
 type Skill = {
   name: string
@@ -74,20 +80,6 @@ const skills: Skill[] = [
 export function About() {
   const [isHovered, setIsHovered] = useState(false)
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null)
-  const popupRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
-        setSelectedSkill(null)
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [])
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-slate-900 to-gray-800 dark:bg-gray-900" id="about">
@@ -148,47 +140,34 @@ export function About() {
                 </motion.div>
               ))}
             </div>
-            <AnimatePresence>
-              {selectedSkill && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 z-0" onClick={() => setSelectedSkill(null)} />
-              )}
-              {selectedSkill && (
-                <motion.div
-                  ref={popupRef}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-black to-gray-800  dark:bg-gray-800 rounded-lg shadow-lg p-4 z-10 w-80 max-h-80 overflow-y-auto"
-                >
-                  <Button 
-                    variant="outline" 
-                    className="absolute top-1 right-1 p-1"
-                    onClick={() => setSelectedSkill(null)}
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                  <div className="flex items-center mb-2 text-white">
-                    {selectedSkill.icon}
-                    <h3 className="text-lg font-bold ml-2 text-white">{selectedSkill.name}</h3>
-                  </div>
-                  <p className="text-sm text-gray-400 dark:text-gray-300 mb-2">{selectedSkill.description}</p>
-                  <div>
-                    <h4 className="text-sm font-semibold mb-1 text-white">Technologies:</h4>
-                    <div className="flex flex-wrap gap-1">
-                      {selectedSkill.technologies.map((tech, index) => (
-                        <span key={index} className="bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-200 px-1 py-0.5 rounded-full text-xs">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
           </div>
         </div>
       </div>
+
+      <Dialog open={selectedSkill !== null} onOpenChange={(open: boolean) => !open && setSelectedSkill(null)}>
+        <DialogContent className="bg-gradient-to-r from-black to-gray-800 border-gray-700 text-white sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center">
+              {selectedSkill?.icon}
+              <span className="ml-2">{selectedSkill?.name}</span>
+            </DialogTitle>
+            <DialogDescription className="text-gray-400">
+              {selectedSkill?.description}
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div>
+            <h4 className="text-sm font-semibold mb-1 text-white">Technologies:</h4>
+            <div className="flex flex-wrap gap-1">
+              {selectedSkill?.technologies.map((tech, index) => (
+                <span key={index} className="bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-200 px-1 py-0.5 rounded-full text-xs">
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   )
 }
