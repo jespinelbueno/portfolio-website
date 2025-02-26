@@ -3,17 +3,23 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 export function Projects() {
   const projects = [
+    // {
+    //   title: "AI Website Background Generator",
+    //   description: "Developed a web application for dynamically generating and displaying AI-created background images.",
+    //   technologies: "React, seedrandom, AIPicGen API, CSS, and JavaScript.",
+    //   url: "https://github.com/jespinelbueno/bg-img-gen" // Example URL
+    // }
+    {
+      title: "FutureScholarsAI",
+      description: "Developed an AI-powered student management platform that combines natural language processing, document analysis, and predictive analytics to streamline educational record management and student potential assessment.",
+      technologies: "Next.js 14, TypeScript, PostgreSQL, Prisma, TensorFlow.js, Natural.js, Tesseract.js, PDF.js, Tailwind CSS, and Shadcn/ui.",
+      url: "https://student-database-app-eta.vercel.app/" // Example URL
+    },
     {
       title: "Chat Application",
       description: "Developed a chat application with user authentication, graphic chat interface, real-time message delivery, and password encryption.",
       technologies: "React, PostgreSQL, JavaScript, Node.js, JWT Encryption, Express, pg...",
       url: "https://juandi-chat-app.vercel.app/" // Example URL
-    },
-    {
-      title: "AI Website Background Generator",
-      description: "Developed a web application for dynamically generating and displaying AI-created background images.",
-      technologies: "React, seedrandom, AIPicGen API, CSS, and JavaScript.",
-      url: "https://github.com/jespinelbueno/bg-img-gen" // Example URL
     },
     {
       title: "Automatic Email Prep",
