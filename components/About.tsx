@@ -96,11 +96,11 @@ export function About() {
                 onMouseLeave={() => setIsHovered(false)}
               >
                 <Image
-                  src="/images/headshotsq.jpg?height=300&width=300"
-                  alt="Your Name"
-                  className="rounded-full border-4 border-gray-600 dark:border-gray-700"
-                  layout="fill"
-                  objectFit="cover"
+                  src="/images/headshotsq.jpg"
+                  alt="Juan Espinel"
+                  className="rounded-full border-4 border-gray-600 dark:border-gray-700 object-cover"
+                  fill
+                  sizes="(min-width: 768px) 192px, (min-width: 640px) 160px, 128px"
                 />
                 {isHovered && (
                   <motion.div 
