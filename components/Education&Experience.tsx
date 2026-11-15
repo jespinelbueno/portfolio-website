@@ -28,7 +28,7 @@ const timelineItems: TimelineItem[] = [
       },
     {
         
-      title: "Diversity Recruitment Specialist",
+      title: "Recruitment Specialist",
       institution: "Liberty University",
       startYear: 2023,
       endYear: "Present",
@@ -43,15 +43,6 @@ const timelineItems: TimelineItem[] = [
       endYear: 2023,
       description: "Internship focused on software development and Agile processes.",
       details: "Pioneered a social media development framework using the PERN stack, significantly improving application performance and user experience.",
-      type: "experience"
-    },
-    {
-      title: "Full Stack Developer Intern",
-      institution: "Nicely Done Sites (Remote)",
-      startYear: 2021,
-      endYear: 2021,
-      description: "Worked on developing dynamic e-commerce websites.",
-      details: "Developed and launched more than 10 dynamic e-commerce websites using WordPress and WooCommerce, enhancing user engagement. Developed web applications using JavaScript, HTML5, and CSS, improving user experience within four months.",
       type: "experience"
     },
     {
