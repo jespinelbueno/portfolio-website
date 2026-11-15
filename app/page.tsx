@@ -7,9 +7,9 @@ import { EducationExperience } from '@/components/Education&Experience'
 
 export default function Home() {
   return (
-    <div className=" bg-black flex flex-col min-h-screen">
+    <div className=" bg-black flex flex-col min-h-dvh">
       <Header />
-      <main className="flex-1 flex flex-col items-center justify-center self-align">
+      <main className="flex-1 min-w-0 flex flex-col">
         <About />
         <EducationExperience />
         <Projects />

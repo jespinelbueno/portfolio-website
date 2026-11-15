@@ -1,21 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState, type ReactNode } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
-import { Database, BarChart3, PanelsTopLeft, LineChart, ArrowUpRight } from 'lucide-react'
-import React from 'react'
-import { 
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription
-} from "@/components/ui/dialog"
+import { Database, BarChart3, PanelsTopLeft, LineChart, ArrowRight, ArrowUpRight } from 'lucide-react'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 
 type Skill = {
   name: string
-  icon: React.ReactNode
+  icon: ReactNode
   description: string
   technologies: string[]
 }
@@ -48,100 +40,76 @@ const skills: Skill[] = [
 ]
 
 export function About() {
-  const [isHovered, setIsHovered] = useState(false)
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null)
+  const activeTrigger = useRef<HTMLButtonElement | null>(null)
 
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-slate-900 to-gray-800 dark:bg-gray-900" id="about">
-      <div className="container px-4 md:px-6 mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
-          <div className="md:col-span-1 bg-gradient-to-r from-gray-800 to-gray-900 dark:bg-gray-800 rounded-lg p-6">
-            <div className="flex flex-col sm:flex-row md:flex-col items-center">
-              <motion.div 
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-              >
-                <Image
-                  src="/images/headshotsq.jpg"
-                  alt="Juan Espinel"
-                  className="rounded-full border-4 border-gray-600 dark:border-gray-700 object-cover"
-                  fill
-                  sizes="(min-width: 768px) 192px, (min-width: 640px) 160px, 128px"
-                />
-                {isHovered && (
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full"
-                  >
-                    <p className="text-white text-sm">Hello there!</p>
-                  </motion.div>
-                )}
-              </motion.div>
-              <div className="mt-4 sm:mt-0 sm:ml-6 md:mt-4 md:ml-0 text-center sm:text-left md:text-center">
-                <h1 className="text-2xl text-white font-bold tracking-tighter sm:text-3xl md:text-4xl">
-                  Juan Espinel
-                </h1>
-                <p className="text-slate-300 mt-2">
-                  Healthcare Data Analytics & Engineering | R1 RCM
-                </p>
-              </div>
+    <section className="section-grid bg-gradient-to-r from-slate-900 to-gray-800 text-white" id="about">
+      <div className="portfolio-container relative">
+        <div className="grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-[1.55fr_1fr] lg:gap-20 lg:py-24">
+          <div className="min-w-0">
+            <p className="eyebrow mb-6">Juan Espinel · Analytics & Engineering</p>
+            <h1 className="max-w-3xl text-[2.65rem] font-medium leading-[1.08] tracking-[-0.045em] sm:text-6xl lg:text-[4.25rem]">
+              Engineering better ways to work with data.
+            </h1>
+            <p className="mt-6 max-w-xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
+              I bring a software engineering foundation to healthcare data at R1 RCM. Building tools to analyze billing, check data quality, and make complex information easier to explore.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3">
+              <a href="#projects" className="action-link action-primary">Explore my work <ArrowRight aria-hidden="true" /></a>
+              <a href="#contact" className="action-link">Get in touch <ArrowRight aria-hidden="true" /></a>
             </div>
           </div>
-          <div className="md:col-span-2 relative">
-            <h2 className="text-2xl text-white font-bold mb-3">Some things I do</h2>
-            <p className="text-slate-300 leading-relaxed mb-6 max-w-2xl">
-              I bring a software engineering foundation to healthcare data analytics and engineering at R1 RCM, building tools to analyze billing data, check data quality, and make information easier to explore.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {skills.map((skill) => (
-                <motion.button
-                  type="button"
-                  key={skill.name}
-                  aria-haspopup="dialog"
-                  whileHover={{ y: -3 }}
-                  whileTap={{ scale: 0.99 }}
-                  className="text-left border border-slate-700 bg-slate-900/60 p-5 rounded-xl hover:border-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 transition-colors"
-                  onClick={() => setSelectedSkill(skill)}
-                >
-                  <div className="flex text-sky-300 items-center justify-between mb-4">
-                    {skill.icon}
-                    <ArrowUpRight className="h-4 w-4 text-slate-400" aria-hidden="true" />
-                  </div>
-                  <h3 className="text-white font-semibold mb-2">{skill.name}</h3>
-                  <p className="text-sm text-slate-300 leading-relaxed">{skill.description}</p>
-                </motion.button>
-              ))}
+          <div className="surface-card overflow-hidden lg:ml-auto lg:w-full lg:max-w-sm">
+            <div className="flex items-center gap-5 p-6 sm:p-8 lg:flex-col lg:items-start">
+              <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-lg sm:h-32 sm:w-32 lg:h-44 lg:w-44">
+                <Image src="/images/headshotsq.jpg" alt="Juan Espinel" fill priority sizes="(min-width: 1024px) 176px, (min-width: 640px) 128px, 96px" className="object-cover" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-xl font-medium tracking-tight sm:text-2xl">Juan Espinel</p>
+                <p className="mt-2 text-sm leading-6 text-slate-300">Healthcare Data Analytics<br />& Engineering</p>
+              </div>
+            </div>
+            <div className="flex items-center justify-between gap-4 border-t border-slate-700/70 px-6 py-5 sm:px-8">
+              <span className="inline-flex items-center gap-2 text-xs text-slate-400"><span className="h-1.5 w-1.5 rounded-full bg-gray-200" />Currently at</span>
+              <span className="text-sm font-semibold tracking-tight">R1 RCM</span>
             </div>
           </div>
         </div>
-      </div>
 
-      <Dialog open={selectedSkill !== null} onOpenChange={(open: boolean) => !open && setSelectedSkill(null)}>
-        <DialogContent className="bg-gradient-to-r from-black to-gray-800 border-gray-700 text-white sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center">
-              {selectedSkill?.icon}
-              <span className="ml-2">{selectedSkill?.name}</span>
-            </DialogTitle>
-            <DialogDescription className="text-gray-400">
-              {selectedSkill?.description}
-            </DialogDescription>
-          </DialogHeader>
-          
-          <div>
-            <h4 className="text-sm font-semibold mb-1 text-white">Technologies:</h4>
-            <div className="flex flex-wrap gap-1">
-              {selectedSkill?.technologies.map((tech, index) => (
-                <span key={index} className="bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-200 px-1 py-0.5 rounded-full text-xs">
-                  {tech}
+        <div className="flex flex-wrap items-center gap-x-8 gap-y-4 border-y border-slate-700/60 py-6" aria-label="Core technologies">
+          <span className="text-xs font-medium text-slate-400">My everyday toolkit</span>
+          {['Python', 'SQL', 'Apache Spark', 'Power BI', 'Databricks', 'Snowflake'].map(tool => <span key={tool} className="text-sm font-medium tracking-tight text-slate-300">{tool}</span>)}
+        </div>
+
+        <div className="py-16 sm:py-20">
+          <p className="eyebrow mb-4">What I do</p>
+          <h2 className="section-title max-w-3xl">From complex data to clarity.<br /><span className="text-slate-400">The tools and thinking behind my work.</span></h2>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2">
+            {skills.map(skill => (
+              <button key={skill.name} type="button" aria-haspopup="dialog" aria-label={`Explore ${skill.name}`} className="surface-card interactive-card group flex min-w-0 flex-col p-6 text-left sm:p-8" onClick={event => { activeTrigger.current = event.currentTarget; setSelectedSkill(skill) }}>
+                <span className="mb-6 flex w-full items-center justify-between">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-md border border-slate-700 text-gray-200">{skill.icon}</span>
+                  <ArrowUpRight className="h-5 w-5 text-slate-400 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
                 </span>
-              ))}
-            </div>
+                <h3 className="text-xl font-medium tracking-tight sm:text-2xl">{skill.name}</h3>
+                <p className="mb-7 mt-3 max-w-lg text-sm leading-7 text-slate-300">{skill.description}</p>
+                <span className="mt-auto flex flex-wrap gap-2">{skill.technologies.slice(0, 3).map(tech => <span key={tech} className="tech-tag">{tech}</span>)}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+      <Dialog open={selectedSkill !== null} onOpenChange={open => !open && setSelectedSkill(null)}>
+        <DialogContent onCloseAutoFocus={event => { event.preventDefault(); activeTrigger.current?.focus() }} className="border-slate-700 bg-gradient-to-r from-black to-gray-800 p-7 text-white sm:max-w-lg sm:p-8">
+          <DialogHeader className="text-left">
+            <div className="mb-5 text-gray-200">{selectedSkill?.icon}</div>
+            <DialogTitle className="pr-6 text-2xl font-medium leading-tight">{selectedSkill?.name}</DialogTitle>
+            <DialogDescription className="pt-3 text-base leading-7 text-slate-300">{selectedSkill?.description}</DialogDescription>
+          </DialogHeader>
+          <div className="mt-3 border-t border-slate-700 pt-5">
+            <h4 className="mb-3 text-xs font-medium text-slate-400">Tools & technologies</h4>
+            <div className="flex flex-wrap gap-2">{selectedSkill?.technologies.map(tech => <span key={tech} className="tech-tag">{tech}</span>)}</div>
           </div>
         </DialogContent>
       </Dialog>

@@ -10,10 +10,10 @@ export const Button: React.FC<ButtonProps> = ({
   className = '', 
   ...props 
 }) => {
-  const baseStyles = 'px-4 py-2 rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2'
+  const baseStyles = 'inline-flex min-h-11 items-center justify-center gap-2 px-5 py-2.5 rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-900 disabled:opacity-50 disabled:pointer-events-none'
   const variantStyles = {
-    default: 'bg-black text-white hover:bg-slate-700 focus:ring-slate-500',
-    outline: 'border border-gray-300 text-white hover:bg-gray-600 focus:ring-slate-500',
+    default: 'border border-slate-500 bg-slate-700 text-white hover:bg-slate-600',
+    outline: 'border border-slate-700 text-white hover:bg-slate-800',
     secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400'
   }
 

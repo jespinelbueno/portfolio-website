@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { ArrowUpRight, Code2 } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 export function Projects() {
@@ -30,22 +30,22 @@ export function Projects() {
   ]
 
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-black flex items-center justify-center" id="projects">
-      <div className="container px-4 md:px-6 max-w-6xl">
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-8 text-center text-white">Projects</h2>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <section className="section-grid w-full border-t border-slate-800 bg-black py-16 sm:py-24" id="projects">
+      <div className="portfolio-container relative">
+        <p className="eyebrow mb-4">Selected work</p>
+        <h2 className="section-title mb-10 text-white">Ideas, built into applications.</h2>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
-            <Card key={index}>
+            <Card key={index} className="group flex h-full flex-col transition-colors hover:border-slate-500">
               <CardHeader>
+                <div className="mb-8 flex items-center justify-between text-slate-400"><Code2 className="h-5 w-5 text-gray-200" aria-hidden="true" /><span className="font-mono text-xs">0{index + 1}</span></div>
                 <CardTitle>{project.title}</CardTitle>
                 <CardDescription>{project.description}</CardDescription>
               </CardHeader>
-              <CardContent>
-                <p>Technologies used: {project.technologies}</p>
-                <a href={project.url} target="_blank" rel="noopener noreferrer">
-                  <Button className="mt-4" variant="outline">
-                    View Project
-                  </Button>
+              <CardContent className="flex flex-1 flex-col">
+                <p className="mb-6 text-xs leading-6 text-slate-400"><span className="mb-2 block font-medium text-slate-300">Built with</span>{project.technologies}</p>
+                <a className="action-link mt-auto justify-start self-start" href={project.url} target="_blank" rel="noopener noreferrer">
+                  View project <ArrowUpRight aria-hidden="true" />
                 </a>
               </CardContent>
             </Card>

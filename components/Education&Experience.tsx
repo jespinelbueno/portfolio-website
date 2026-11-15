@@ -1,136 +1,129 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ChevronDown, ChevronUp, Briefcase, GraduationCap } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
-
+import { useId, useState } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { timelineItems, type TimelineItem } from '@/data/timeline'
 
-  export function EducationExperience({ items = timelineItems }: { items?: TimelineItem[] }) {
-    const [expandedItems, setExpandedItems] = useState<number[]>([]);
-    const [filter, setFilter] = useState<"all" | "education" | "experience">("all");
-    const [progress, setProgress] = useState(0);
-  
-    const toggleItem = (index: number) => {
-      setExpandedItems((prev) =>
-        prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
-      );
-    };
-  
-    const filteredItems = items.filter((item) => filter === "all" || item.type === filter);
-  
-    useEffect(() => {
-      const handleScroll = () => {
-        const scrollPosition = window.scrollY;
-        const windowHeight = window.innerHeight;
-        const fullHeight = document.documentElement.scrollHeight;
-        const newProgress = (scrollPosition / (fullHeight - windowHeight)) * 100;
-        setProgress(newProgress);
-      };
-  
-      window.addEventListener("scroll", handleScroll);
-      return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-  
-    return (
-      <section
-        className="w-full pt-12 pb-6 md:pt-24 md:pb-12 lg:pt-32 lg:pb16 bg-gradient-to-r text-white from-black to-slate-900"
-        id="education-experience"
-      >
-        <div className="container px-4 md:px-6 max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-8 text-center">
-            Education & Experience
+type Filter = 'all' | TimelineItem['type']
+
+const filters = [
+  { value: 'all', label: 'All' },
+  { value: 'experience', label: 'Experience' },
+  { value: 'education', label: 'Education' },
+] as const
+
+function itemKey(item: TimelineItem) {
+  return `${item.type}-${item.institution}-${item.title}-${item.startYear ?? ''}`
+}
+
+export function EducationExperience({ items = timelineItems }: { items?: TimelineItem[] }) {
+  const [filter, setFilter] = useState<Filter>('all')
+  const [expandedItems, setExpandedItems] = useState<string[]>([])
+  const sectionId = useId()
+  const reducedMotion = useReducedMotion()
+  const visibleItems = items.filter(item => filter === 'all' || item.type === filter)
+
+  function toggleItem(key: string) {
+    setExpandedItems(previous => previous.includes(key)
+      ? previous.filter(item => item !== key)
+      : [...previous, key])
+  }
+
+  return (
+    <section
+      id="education-experience"
+      aria-labelledby={`${sectionId}-heading`}
+      className="section-grid w-full border-t border-slate-800 bg-gradient-to-r from-black to-slate-900 py-16 text-white sm:py-24"
+    >
+      <div className="portfolio-container relative">
+        <p className="eyebrow mb-5">Background</p>
+        <div className="grid gap-5 lg:grid-cols-2 lg:items-start lg:gap-16">
+          <h2 id={`${sectionId}-heading`} className="section-title max-w-lg">
+            Education &amp; Experience
           </h2>
-          <div className="flex justify-center space-x-4 mb-8">
-            <Button onClick={() => setFilter("all")} variant={filter === "all" ? "default" : "outline"}>
-              All
-            </Button>
-            <Button onClick={() => setFilter("education")} variant={filter === "education" ? "default" : "outline"}>
-              <GraduationCap className="mr-2 h-4 w-4" />
-              Education
-            </Button>
-            <Button onClick={() => setFilter("experience")} variant={filter === "experience" ? "default" : "outline"}>
-              <Briefcase className="mr-2 h-4 w-4" />
-              Experience
-            </Button>
-          </div>
-          <div className="relative">
-            {/* Vertical Line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gray-400 max-[570px]:left-4" />
-            {/* Progress Indicator */}
-            <div
-              className="absolute left-1/2 transform -translate-x-1/2 w-0.5 bg-gray-500 dark:bg-blue-400 transition-all duration-300 ease-out max-[570px]:left-4"
-              style={{ height: `${progress}%` }}
-            />
-            {/* Timeline Items */}
-            <AnimatePresence>
-              {filteredItems.map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -50 }}
-                  transition={{ duration: 0.5 }}
-                  className={`mb-12 flex w-full ${
-                    index % 2 === 0 ? "flex-row-reverse" : ""
-                  } max-[400px]:flex-row max-[570px]:items-start max-[570px]:space-x-4`}
-                >
-                  {/* Timeline Icon */}
-                  <div className="z-20 flex items-center justify-center bg-gray-800 shadow-xl w-12 h-12 rounded-full max-[4700px]:w-10 max-[570px]:h-10 max-[570px]:ml-0">
-                    {item.type === "education" ? (
-                      <GraduationCap className="w-6 h-6 text-white max-[570px]:w-5 max-[570px]:h-5" />
-                    ) : (
-                      <Briefcase className="w-6 h-6 text-white max-[570px]:w-5 max-[570px]:h-5" />
+          <p className="max-w-lg text-base leading-7 text-slate-400">
+            A foundation in software engineering. A focus on healthcare data.
+            The experience that connects the two.
+          </p>
+        </div>
+
+        <div role="group" aria-label="Filter education and experience" className="mt-10 flex gap-6 sm:mt-12 sm:gap-8">
+          {filters.map(({ value, label }) => (
+            <button
+              key={value}
+              type="button"
+              aria-pressed={filter === value}
+              onClick={() => setFilter(value)}
+              className={`relative -mb-px min-h-12 border-b-2 pb-4 pt-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-900 ${filter === value
+                ? 'border-white text-white'
+                : 'border-transparent text-slate-400 hover:text-white'}`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <p className="sr-only" role="status">Showing {visibleItems.length} {filter === 'all' ? 'education and experience entries' : `${filter} entries`}.</p>
+
+        <ol className="mt-7 grid gap-4">
+          {visibleItems.map(item => {
+            const key = itemKey(item)
+            const expanded = expandedItems.includes(key)
+            const detailsId = `${sectionId}-${encodeURIComponent(key)}`
+            const isCurrent = item.endYear === 'Present'
+            const date = item.dateLabel ?? [item.startYear, item.endYear].filter(Boolean).join(' – ')
+
+            return (
+              <li key={key} className="border border-slate-700/70 bg-slate-900/40 transition-colors hover:border-slate-500">
+                <article className="grid gap-4 p-6 sm:grid-cols-[140px_minmax(0,1fr)] sm:gap-x-8 sm:p-8 lg:grid-cols-[160px_minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-x-10">
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs leading-6 sm:block">
+                    <p className="text-slate-400">{date}</p>
+                    <p className={`sm:mt-2 ${isCurrent ? 'text-gray-200' : 'text-slate-500'}`}>
+                      {isCurrent ? 'Current role' : item.type === 'education' ? 'Education' : 'Experience'}
+                    </p>
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="text-xl font-medium leading-snug tracking-[-0.025em] sm:text-2xl">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-slate-400">{item.institution}</p>
+                  </div>
+                  <div className="min-w-0 sm:col-start-2 lg:col-start-auto">
+                    <p className="max-w-xl text-sm leading-7 text-slate-300">{item.description}</p>
+                    {item.details && (
+                      <>
+                        <div id={detailsId}>
+                          <AnimatePresence initial={false}>
+                            {expanded && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: reducedMotion ? 0 : 0.2 }}
+                                className="overflow-hidden"
+                              >
+                                <p className="max-w-xl pt-4 text-sm leading-7 text-slate-400">{item.details}</p>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                        <button
+                          type="button"
+                          aria-expanded={expanded}
+                          aria-controls={detailsId}
+                          aria-label={`${expanded ? 'Hide' : 'Read'} details about ${item.title} at ${item.institution}`}
+                          onClick={() => toggleItem(key)}
+                          className="mt-2 min-h-11 rounded-sm text-xs font-medium text-gray-200 underline decoration-slate-600 underline-offset-4 transition-colors hover:text-white hover:decoration-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-900"
+                        >
+                          {expanded ? 'Show less' : 'Read more'}
+                        </button>
+                      </>
                     )}
                   </div>
-  
-                  {/* Timeline Card */}
-                  <div className="from-black to-gray-800 dark:bg-gray-900 rounded-lg shadow-xl px-6 py-4 w-5/12 max-[570px]:w-full max-[570px]:ml-2">
-                    <Card
-                      className={`cursor-pointer transition-all duration-300 ease-in-out hover:shadow-2xl`}
-                      onClick={() => toggleItem(index)}
-                    >
-                      <CardHeader>
-                        <CardTitle className="flex justify-between items-center flex-wrap">
-                          <span>{item.title}</span>
-                          <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                            {item.dateLabel ?? (item.startYear ? `${item.startYear} - ${item.endYear ?? ''}` : item.endYear ?? '')}
-                          </span>
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-sm font-bold text-gray-500 dark:text-blue-400">{item.institution}</p>
-                        <p className="text-sm mt-2">{item.description}</p>
-                        <AnimatePresence>
-                          {expandedItems.includes(index) && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: "auto" }}
-                              exit={{ opacity: 0, height: 0 }}
-                              transition={{ duration: 0.3 }}
-                              className="mt-4 text-sm text-gray-600 dark:text-gray-300"
-                            >
-                              {item.details}
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                        <div className="mt-4 flex justify-center">
-                          {expandedItems.includes(index) ? (
-                            <ChevronUp className="w-6 h-6 text-gray-500" />
-                          ) : (
-                            <ChevronDown className="w-6 h-6 text-gray-500" />
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-        </div>
-      </section>
-    );
-  }
+                </article>
+              </li>
+            )
+          })}
+        </ol>
+        {visibleItems.length === 0 && <p className="py-10 text-sm text-slate-400">No entries to show yet.</p>}
+      </div>
+    </section>
+  )
+}

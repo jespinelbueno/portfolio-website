@@ -1,88 +1,69 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react"; // Icons for open/close
+import { Menu, ArrowRight } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
+
+const links = [
+  { href: "#about", label: "About" },
+  { href: "#education-experience", label: "Education & Experience" },
+  { href: "#projects", label: "Projects" },
+  { href: "#contact", label: "Contact" },
+];
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const pendingSection = useRef<string | null>(null);
 
-  // Disable scrolling when menu is open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden"; // Disable scrolling
-    } else {
-      document.body.style.overflow = "auto"; // Enable scrolling
-    }
-    return () => {
-      document.body.style.overflow = "auto"; // Reset on unmount
-    };
-  }, [isOpen]);
+    // Observe the layout width so an open menu also closes when the app's
+    // embedded viewport changes without a native window resize.
+    const observer = new ResizeObserver(() => {
+      if (document.documentElement.clientWidth >= 768) setIsOpen(false);
+    });
+    observer.observe(document.documentElement);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <header className="px-4 lg:px-6 h-14 flex items-center justify-between bg-gradient-to-r from-black to-gray-800 text-white relative z-50">
-      {/* Logo */}
-      <Link href="#" className="flex items-center">
-        <span className="sr-only">Juan Espinel</span>
-        <span className="font-bold text-xl">JE</span>
-      </Link>
-
-      {/* Desktop Navigation (Hidden on small screens) */}
-      <nav className="ml-auto hidden max-[400px]:hidden sm:flex gap-4">
-        <Link className="text-sm font-medium hover:underline underline-offset-4" href="#about">
-          About
-        </Link>
-        <Link className="text-sm font-medium hover:underline underline-offset-4" href="#education-experience">
-          Education & Experience
-        </Link>
-        <Link className="text-sm font-medium hover:underline underline-offset-4" href="#projects">
-          Projects
-        </Link>
-        <Link className="text-sm font-medium hover:underline underline-offset-4" href="#contact">
-          Contact
-        </Link>
-      </nav>
-
-      {/* Hamburger Menu Button (Visible on small screens) */}
-      <button 
-        className="sm:hidden max-[400px]:flex items-center justify-center p-2 z-50" 
-        onClick={() => setIsOpen(true)}
-      >
-        <Menu size={24} />
-      </button>
-
-      {/* Full-Screen Mobile Navigation Menu */}
-      {isOpen && (
-        <motion.div 
-          initial={{ opacity: 0 }} 
-          animate={{ opacity: 1 }} 
-          exit={{ opacity: 0 }} 
-          className="fixed inset-0 bg-black bg-opacity-95 flex flex-col items-center justify-center text-white space-y-6 z-50"
-        >
-          {/* Close Button */}
-          <button 
-            className="absolute top-4 right-6 text-white" 
-            onClick={() => setIsOpen(false)}
-          >
-            <X size={32} />
-          </button>
-
-          {/* Menu Links */}
-          <Link className="text-2xl font-medium hover:underline" href="#about" onClick={() => setIsOpen(false)}>
-            About
-          </Link>
-          <Link className="text-2xl font-medium hover:underline" href="#education-experience" onClick={() => setIsOpen(false)}>
-            Education & Experience
-          </Link>
-          <Link className="text-2xl font-medium hover:underline" href="#projects" onClick={() => setIsOpen(false)}>
-            Projects
-          </Link>
-          <Link className="text-2xl font-medium hover:underline" href="#contact" onClick={() => setIsOpen(false)}>
-            Contact
-          </Link>
-        </motion.div>
-      )}
+    <header className="sticky top-0 z-40 w-full border-b border-slate-700/60 bg-gradient-to-r from-black to-gray-800 text-white">
+      <div className="portfolio-container flex h-20 items-center justify-between">
+        <Link href="#" aria-label="Juan Espinel home" className="flex min-h-11 items-center font-semibold text-xl tracking-[-0.06em]">juan<span className="text-slate-400">espinel.</span></Link>
+        <nav aria-label="Main navigation" className="hidden items-center gap-6 md:flex">
+          {links.map(link => (
+            <Link key={link.href} href={link.href} className={link.href === "#contact" ? "action-link action-primary" : "inline-flex min-h-11 items-center text-sm font-medium text-slate-300 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300"}>{link.label}{link.href === "#contact" && <ArrowRight aria-hidden="true" />}</Link>
+          ))}
+        </nav>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+          <DialogTrigger asChild>
+            <button type="button" aria-label="Open navigation" className="inline-flex h-11 w-11 items-center justify-center rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 md:hidden">
+              <Menu size={24} aria-hidden="true" />
+            </button>
+          </DialogTrigger>
+          <DialogContent onCloseAutoFocus={event => {
+            if (!pendingSection.current) return;
+            event.preventDefault();
+            const section = document.querySelector<HTMLElement>(pendingSection.current);
+            pendingSection.current = null;
+            // Scroll after the dialog releases its focus trap and body scroll lock.
+            if (section) {
+              section.tabIndex = -1;
+              section.focus({ preventScroll: true });
+              section.scrollIntoView({ block: "start" });
+            }
+          }} aria-describedby={undefined} className="left-0 top-0 flex h-dvh max-h-none w-full max-w-none translate-x-0 translate-y-0 flex-col overflow-y-auto rounded-none border-0 bg-slate-950 p-6 text-white sm:rounded-none">
+            <DialogTitle className="sr-only">Navigation</DialogTitle>
+            <nav aria-label="Mobile navigation" className="my-auto flex flex-col items-center gap-3 py-12 text-center">
+              {links.map(link => (
+                <DialogClose key={link.href} asChild>
+                  <Link href={link.href} onClick={() => { pendingSection.current = link.href; }} className="flex min-h-11 items-center justify-center rounded-lg px-4 text-xl font-medium hover:text-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 sm:text-2xl">{link.label}</Link>
+                </DialogClose>
+              ))}
+            </nav>
+          </DialogContent>
+        </Dialog>
+      </div>
     </header>
   );
 }

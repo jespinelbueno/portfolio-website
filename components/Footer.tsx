@@ -1,17 +1,13 @@
 import Link from 'next/link'
+import { ArrowUp } from 'lucide-react'
 
 export function Footer() {
   return (
-    <footer className=" bg-black flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-      <p className="text-xs text-gray-500 dark:text-gray-400">© 2025 Juan Espinel. All rights reserved.</p>
-      <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-        <Link className="text-xs hover:underline underline-offset-4" href="#">
-          Terms of Service
-        </Link>
-        <Link className="text-xs hover:underline underline-offset-4" href="#">
-          Privacy
-        </Link>
-      </nav>
+    <footer className="w-full border-t border-slate-800 bg-black text-slate-400">
+      <div className="portfolio-container flex flex-col items-start justify-between gap-4 py-7 sm:flex-row sm:items-center">
+        <p className="text-xs">© {new Date().getFullYear()} Juan Espinel. All rights reserved.</p>
+        <Link className="action-link min-h-11 text-xs text-slate-400" href="#about">Back to top <ArrowUp aria-hidden="true" /></Link>
+      </div>
     </footer>
   )
 }

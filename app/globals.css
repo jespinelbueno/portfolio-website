@@ -3,8 +3,44 @@
 @tailwind utilities;
 
 
+html { scroll-behavior: smooth; }
 body {
   background: black;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+section[id] { scroll-margin-top: 105px; }
+::selection { background: #334155; color: white; }
+
+@layer components {
+  .portfolio-container { @apply mx-auto w-full max-w-6xl px-5 sm:px-8; }
+  .eyebrow { @apply text-sm font-medium tracking-normal text-gray-200; }
+  .section-title { @apply text-3xl font-medium leading-[1.2] tracking-[-0.035em] sm:text-4xl; }
+  .surface-card {
+    @apply rounded-lg border border-slate-700/70 bg-slate-900/60;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+  }
+  .interactive-card {
+    @apply transition duration-200 hover:-translate-y-1 hover:border-slate-500 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-900;
+  }
+  .action-link {
+    @apply inline-flex min-h-11 items-center justify-center gap-3 rounded-md text-sm font-semibold text-white transition-colors hover:text-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-900;
+  }
+  .action-link svg { @apply h-4 w-4 shrink-0 transition-transform duration-200; }
+  .action-link:hover svg { transform: translateX(3px); }
+  .action-primary { @apply border border-slate-500 bg-slate-700 px-5 hover:bg-slate-600 hover:text-white; }
+  .tech-tag { @apply inline-flex items-center rounded border border-slate-700/70 px-2.5 py-1 text-xs font-normal leading-5 text-slate-400; }
+  .section-grid { position: relative; }
+  .section-grid::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    max-width: 1152px; margin-inline: auto;
+    border-inline: 1px solid rgb(100 116 139 / 12%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .interactive-card:hover, .action-link:hover svg { transform: none; }
 }
 
 @layer utilities {
