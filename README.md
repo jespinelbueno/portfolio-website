@@ -1,5 +1,20 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Runtime and deployment
+
+Use Node.js 26, matching Vercel's deployment runtime. With nvm installed:
+
+```bash
+nvm install
+nvm use
+npm ci
+npm run build
+```
+
+`package.json` pins `engines.node` to `26.x`, which Vercel uses on the next
+deployment. Commit and push the runtime and lockfile changes, then deploy the
+new commit. Redeploying an older commit will keep its old configuration.
+
 ## Getting Started
 
 First, run the development server:

@@ -1,19 +1,19 @@
-const { test } = require('node:test')
-const assert = require('node:assert/strict')
-const ts = require('typescript')
-const fs = require('node:fs')
-const vm = require('node:vm')
+import { test } from 'node:test'
+import assert from 'node:assert/strict'
+import ts from 'typescript'
+import fs from 'node:fs'
+import vm from 'node:vm'
 const fallback = [{ title: 'Developer', institution: 'Example', type: 'experience', startYear: 2020, endYear: 'Present', description: 'Saved', details: 'Details' }]
 function load(env, fetch) {
-  const module = { exports: {} }
+  const testModule = { exports: {} }
   const source = ts.transpileModule(fs.readFileSync('lib/linkedin.ts', 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText
-  vm.runInNewContext(source, { module, exports: module.exports, process: { env }, fetch, AbortSignal, URLSearchParams, console: { warn() {} }, require(name) {
+  vm.runInNewContext(source, { module: testModule, exports: testModule.exports, process: { env }, fetch, AbortSignal, URLSearchParams, console: { warn() {} }, require(name) {
     if (name === 'server-only') return {}
     if (name === 'next/cache') return { unstable_cache: fn => fn }
     if (name === '@/data/timeline') return { timelineItems: fallback }
     throw Error(name)
   } })
-  return module.exports.getLinkedInTimeline
+  return testModule.exports.getLinkedInTimeline
 }
 const configured = { LINKEDIN_API_VERSION: 'test', LINKEDIN_MEMBER_ID: 'owner', LINKEDIN_ACCESS_TOKEN: 'secret' }
 const localized = text => ({ localized: { en_US: text } })
