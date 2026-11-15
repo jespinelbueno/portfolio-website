@@ -6,67 +6,9 @@ import { Button } from "@/components/ui/button"
 import { ChevronDown, ChevronUp, Briefcase, GraduationCap } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-type TimelineItem = {
-  title: string;
-  institution: string;
-  startYear: number;
-  endYear: number | 'Present';
-  description: string;
-  details: string;
-  type: 'education' | 'experience';
-}
+import { timelineItems, type TimelineItem } from '@/data/timeline'
 
-const timelineItems: TimelineItem[] = [
-    {
-        title: "Master of Science in Cybersecurity",
-        institution: "Liberty University",
-        startYear: 2024,
-        endYear: 2026,
-        description: "Graduate-level cybersecurity program with a focus on information security.",
-        details: "Maintaining a 4.0 GPA while exploring cybersecurity methodologies and best practices.",
-        type: "education"
-      },
-    {
-        
-      title: "Recruitment Specialist",
-      institution: "Liberty University",
-      startYear: 2023,
-      endYear: "Present",
-      description: "Responsible for diversity recruitment strategies and student engagement.",
-      details: "Streamlined data collection processes managing more than 1500 leads from the academic year 2023 to 2024, improving tracking efficiency and increasing matriculation rates by 330%. Delivered engaging presentations at 30+ recruitment events, increasing inquiries by 200% within 13 months. Assisted in allocating $250,000 annually in scholarship grants. Used Liberty University's CRM integration to monitor the progress of more than 1,500 recruited students.",
-      type: "experience"
-    },
-    {
-      title: "Software Engineer Capstone",
-      institution: "Liberty University",
-      startYear: 2022,
-      endYear: 2023,
-      description: "Internship focused on software development and Agile processes.",
-      details: "Pioneered a social media development framework using the PERN stack, significantly improving application performance and user experience.",
-      type: "experience"
-    },
-    {
-      title: "IT Specialist & Web Developer",
-      institution: "Aquathermic S.A.S., Bogotá, Colombia",
-      startYear: 2019,
-      endYear: 2019,
-      description: "Part-time IT and web development role.",
-      details: "Resolved software and hardware issues for 10+ company computers within three months, reducing downtime. Led the development of the company's website, ensuring alignment with business goals and improving online presence.",
-      type: "experience"
-    },
-    {
-      title: "Bachelor of Science in Computer Science: Software Engineering",
-      institution: "Liberty University",
-      startYear: 2019,
-      endYear: 2023,
-      description: "Undergraduate program in Computer Science with a a focus in software engineering and a strong conceptual and technical foundation.",
-      details: "Gained experience in programming data structures in C/C++, full-stack development, database administration, and data analytics. Participated in multiple projects focused on software development and data-driven decision-making.",
-      type: "education"
-    }
-  ];
-  
-
-  export function EducationExperience() {
+  export function EducationExperience({ items = timelineItems }: { items?: TimelineItem[] }) {
     const [expandedItems, setExpandedItems] = useState<number[]>([]);
     const [filter, setFilter] = useState<"all" | "education" | "experience">("all");
     const [progress, setProgress] = useState(0);
@@ -77,7 +19,7 @@ const timelineItems: TimelineItem[] = [
       );
     };
   
-    const filteredItems = timelineItems.filter((item) => filter === "all" || item.type === filter);
+    const filteredItems = items.filter((item) => filter === "all" || item.type === filter);
   
     useEffect(() => {
       const handleScroll = () => {
@@ -154,7 +96,7 @@ const timelineItems: TimelineItem[] = [
                         <CardTitle className="flex justify-between items-center flex-wrap">
                           <span>{item.title}</span>
                           <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                            {item.startYear} - {item.endYear}
+                            {item.dateLabel ?? (item.startYear ? `${item.startYear} - ${item.endYear ?? ''}` : item.endYear ?? '')}
                           </span>
                         </CardTitle>
                       </CardHeader>

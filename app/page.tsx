@@ -11,7 +11,7 @@ export default function Home() {
       <Header />
       <main className="flex-1 flex flex-col items-center justify-center self-align">
         <About />
-        <EducationExperience></EducationExperience>
+        <EducationExperience />
         <Projects />
         <Contact />
       </main>

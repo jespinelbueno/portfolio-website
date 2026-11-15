@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Code, Database, Globe, Shield, BarChartIcon as ChartBar, Headphones, Network, Lock, LineChart } from 'lucide-react'
+import { Database, BarChart3, PanelsTopLeft, LineChart, ArrowUpRight } from 'lucide-react'
 import React from 'react'
 import { 
   Dialog,
@@ -22,58 +22,28 @@ type Skill = {
 
 const skills: Skill[] = [
   {
-    name: "Frontend Development",
-    icon: <Code className="h-6 w-6" />,
-    description: "Creating responsive and interactive user interfaces with modern web technologies.",
-    technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS"]
-  },
-  {
-    name: "Backend Development",
-    icon: <Database className="h-6 w-6" />,
-    description: "Building robust server-side applications and APIs to power web applications.",
-    technologies: ["Node.js", "Express", "Python", "Prisma", "C/C++"]
-  },
-  {
-    name: "Full Stack Development",
-    icon: <Globe className="h-6 w-6" />,
-    description: "Combining frontend and backend skills to create complete web solutions.",
-    technologies: ["MERN Stack", "PERN stack", "GraphQL", "RESTful APIs"]
-  },
-  {
-    name: "IT Support",
-    icon: <Headphones className="h-6 w-6" />,
-    description: "Providing technical assistance and support for hardware, software, and network issues.",
-    technologies: ["Help Desk Systems", "Remote Desktop", "Troubleshooting", "User Training"]
-  },
-  {
-    name: "Cybersecurity",
-    icon: <Shield className="h-6 w-6" />,
-    description: "Implementing security measures to protect systems, networks, and data from cyber threats.",
-    technologies: ["Firewalls", "Encryption", "Security Audits"]
-  },
-  {
-    name: "Network Administration",
-    icon: <Network className="h-6 w-6" />,
-    description: "Managing and maintaining computer networks to ensure optimal performance and security.",
-    technologies: ["LAN/WAN", "VPN", "Network Protocols", "Router Configuration"]
-  },
-  {
-    name: "Information Security",
-    icon: <Lock className="h-6 w-6" />,
-    description: "Safeguarding sensitive information and managing data privacy compliance.",
-    technologies: [ "Data Classification", "Access Control", "Security Policies"]
-  },
-  {
     name: "Data Analysis",
-    icon: <LineChart className="h-6 w-6" />,
-    description: "Extracting insights from complex datasets to drive informed decision-making.",
-    technologies: ["Python", "SQL", "Statistical Analysis", "Machine Learning"]
+    icon: <LineChart className="h-5 w-5" />,
+    description: "Analyzing healthcare billing and payer mapping data to understand billing information and data quality.",
+    technologies: ["SQL", "Excel", "Healthcare Reimbursement"]
   },
   {
-    name: "Data Visualization",
-    icon: <ChartBar className="h-6 w-6" />,
-    description: "Transforming complex data into clear, insightful visual representations.",
-    technologies: ["Automate", "Excel", "Tableau", "Power BI"]
+    name: "Data Engineering & Quality",
+    icon: <Database className="h-5 w-5" />,
+    description: "Creating quality check pipelines to assess healthcare billing data in Databricks and Snowflake.",
+    technologies: ["Databricks", "Snowflake", "SQL", "Data Modeling"]
+  },
+  {
+    name: "Power BI & Reporting",
+    icon: <BarChart3 className="h-5 w-5" />,
+    description: "Creating Power BI reports that make healthcare billing information and data quality easier to understand.",
+    technologies: ["Power BI", "Data Visualization", "Data Analysis"]
+  },
+  {
+    name: "Interactive Data Apps",
+    icon: <PanelsTopLeft className="h-5 w-5" />,
+    description: "Building Python and Streamlit apps to explore billing data and payer mappings, with Spark in Databricks.",
+    technologies: ["Python", "Streamlit", "Apache Spark", "Databricks", "Snowflake"]
   }
 ]
 
@@ -116,28 +86,35 @@ export function About() {
                 <h1 className="text-2xl text-white font-bold tracking-tighter sm:text-3xl md:text-4xl">
                   Juan Espinel
                 </h1>
-                <p className="text-gray-500 dark:text-gray-400 mt-2">
-                  Full Stack Development / Cyber Security / IT Services
+                <p className="text-slate-300 mt-2">
+                  Healthcare Data Analytics & Engineering | R1 RCM
                 </p>
               </div>
             </div>
           </div>
           <div className="md:col-span-2 relative">
-            <h2 className="text-2xl text-gray-500 font-bold mb-6">Some things I do...</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              {skills.map((skill, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-gradient-to-r from-black to-gray-800  dark:bg-gray-800 p-4 rounded-lg cursor-pointer hover:shadow-lg transition-all duration-300"
+            <h2 className="text-2xl text-white font-bold mb-3">Some things I do</h2>
+            <p className="text-slate-300 leading-relaxed mb-6 max-w-2xl">
+              I bring a software engineering foundation to healthcare data analytics and engineering at R1 RCM, building tools to analyze billing data, check data quality, and make information easier to explore.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {skills.map((skill) => (
+                <motion.button
+                  type="button"
+                  key={skill.name}
+                  aria-haspopup="dialog"
+                  whileHover={{ y: -3 }}
+                  whileTap={{ scale: 0.99 }}
+                  className="text-left border border-slate-700 bg-slate-900/60 p-5 rounded-xl hover:border-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 transition-colors"
                   onClick={() => setSelectedSkill(skill)}
                 >
-                  <div className="flex text-white items-center justify-center mb-2">
+                  <div className="flex text-sky-300 items-center justify-between mb-4">
                     {skill.icon}
+                    <ArrowUpRight className="h-4 w-4 text-slate-400" aria-hidden="true" />
                   </div>
-                  <h3 className="text-center text-white font-semibold">{skill.name}</h3>
-                </motion.div>
+                  <h3 className="text-white font-semibold mb-2">{skill.name}</h3>
+                  <p className="text-sm text-slate-300 leading-relaxed">{skill.description}</p>
+                </motion.button>
               ))}
             </div>
           </div>

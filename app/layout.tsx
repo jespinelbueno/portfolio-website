@@ -14,8 +14,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Juan Espinel - Portfolio",
-  description: " ",
+  title: "Juan Espinel | Healthcare Data Analytics & Engineering",
+  description: "Applying a software engineering background to healthcare data analytics at R1 RCM, with Python, Spark, Streamlit, Power BI, Databricks, and Snowflake.",
 };
 
 export default function RootLayout({

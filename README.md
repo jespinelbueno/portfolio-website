@@ -34,3 +34,17 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Profile content
+
+The homepage uses the manually maintained LinkedIn snapshot in `data/timeline.ts`.
+Edit that file to update education, roles, month/year labels, and descriptions.
+The headline and skill cards are in `components/About.tsx`. Projects are separate
+in `components/Projects.tsx` and were not changed by the profile update.
+
+The optional API adapter in `lib/linkedin.ts` is currently disconnected from the
+homepage. It requires LinkedIn Plus approval and server credentials from
+`.env.example`; the manual timeline requires neither. To opt back in, call
+`getLinkedInTimeline()` from an async homepage and pass its result as the `items`
+prop of `EducationExperience`. LinkedIn only returns the current position and
+most recent education, so earlier history must still be maintained manually.
